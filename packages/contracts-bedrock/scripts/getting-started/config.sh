@@ -20,19 +20,22 @@ reqenv "GS_SEQUENCER_ADDRESS"
 reqenv "L1_RPC_URL"
 
 # Get the finalized block timestamp and hash
-block=$(cast block finalized --rpc-url "$L1_RPC_URL")
-timestamp=$(echo "$block" | awk '/timestamp/ { print $2 }')
-blockhash=$(echo "$block" | awk '/hash/ { print $2 }')
+# block=$(cast block finalized --rpc-url "$L1_RPC_URL")
+# timestamp=$(echo "$block" | awk '/timestamp/ { print $2 }')
+# blockhash=$(echo "$block" | awk '/hash/ { print $2 }')
+block=58749155
+timestamp=1712624554
+blockhash="0xd33714a605acc97036d7940a9ba63ae27491a36abdb50cc3eef834a63b2fdb30"
 
 # Generate the config file
 config=$(cat << EOL
 {
   "l1StartingBlockTag": "$blockhash",
 
-  "l1ChainID": 11155111,
+  "l1ChainID": 1666600000,
   "l2ChainID": 42069,
   "l2BlockTime": 2,
-  "l1BlockTime": 12,
+  "l1BlockTime": 2,
 
   "maxSequencerDrift": 600,
   "sequencerWindowSize": 3600,

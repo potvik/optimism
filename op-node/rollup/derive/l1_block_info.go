@@ -10,6 +10,7 @@ import (
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/core/types"
 	"github.com/ethereum/go-ethereum/crypto"
+	"github.com/ethereum/go-ethereum/log"
 
 	"github.com/ethereum-optimism/optimism/op-bindings/predeploys"
 	"github.com/ethereum-optimism/optimism/op-node/rollup"
@@ -82,7 +83,9 @@ func (info *L1BlockInfo) marshalBinaryBedrock() ([]byte, error) {
 	if err := solabi.WriteUint64(w, info.Time); err != nil {
 		return nil, err
 	}
-	if err := solabi.WriteUint256(w, info.BaseFee); err != nil {
+
+	log.Info("BaseFee", info.BaseFee)
+	if err := solabi.WriteUint256(w, big.NewInt(21000)); err != nil {
 		return nil, err
 	}
 	if err := solabi.WriteHash(w, info.BlockHash); err != nil {
