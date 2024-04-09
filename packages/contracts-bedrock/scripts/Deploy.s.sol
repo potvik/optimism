@@ -270,7 +270,7 @@ contract Deploy is Deployer {
         // Deploy the ProtocolVersionsProxy
         deployERC1967Proxy("ProtocolVersionsProxy");
         deployProtocolVersions();
-        // initializeProtocolVersions();
+        initializeProtocolVersions();
     }
 
     /// @notice Deploy a new OP Chain, with an existing SuperchainConfig provided
