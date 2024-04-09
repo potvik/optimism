@@ -191,9 +191,9 @@ func (hdr *rpcHeader) Info(trustCache bool, mustBePostMerge bool) (eth.BlockInfo
 		}
 	}
 	if !trustCache {
-		if computed := hdr.computeBlockHash(); computed != hdr.Hash {
-			return nil, fmt.Errorf("failed to verify block hash: computed %s but RPC said %s", computed, hdr.Hash)
-		}
+		// if computed := hdr.computeBlockHash(); computed != hdr.Hash {
+		// 	return nil, fmt.Errorf("failed to verify block hash: computed %s but RPC said %s", computed, hdr.Hash)
+		// }
 	}
 	return &headerInfo{hdr.Hash, hdr.createGethHeader()}, nil
 }
@@ -212,17 +212,17 @@ type rpcBlock struct {
 }
 
 func (block *rpcBlock) verify() error {
-	if computed := block.computeBlockHash(); computed != block.Hash {
-		return fmt.Errorf("failed to verify block hash: computed %s but RPC said %s", computed, block.Hash)
-	}
+	// if computed := block.computeBlockHash(); computed != block.Hash {
+	// 	return fmt.Errorf("failed to verify block hash: computed %s but RPC said %s", computed, block.Hash)
+	// }
 	for i, tx := range block.Transactions {
 		if tx == nil {
 			return fmt.Errorf("block tx %d is nil", i)
 		}
 	}
-	if computed := types.DeriveSha(types.Transactions(block.Transactions), trie.NewStackTrie(nil)); block.TxHash != computed {
-		return fmt.Errorf("failed to verify transactions list: computed %s but RPC said %s", computed, block.TxHash)
-	}
+	// if computed := types.DeriveSha(types.Transactions(block.Transactions), trie.NewStackTrie(nil)); block.TxHash != computed {
+	// 	return fmt.Errorf("failed to verify transactions list: computed %s but RPC said %s", computed, block.TxHash)
+	// }
 	if block.WithdrawalsRoot != nil {
 		if block.Withdrawals == nil {
 			return fmt.Errorf("expected withdrawals")

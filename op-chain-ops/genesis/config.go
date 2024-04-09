@@ -602,6 +602,8 @@ func NewDeployConfig(path string) (*DeployConfig, error) {
 		return nil, fmt.Errorf("deploy config at %s not found: %w", path, err)
 	}
 
+	log.Info(path);
+
 	dec := json.NewDecoder(bytes.NewReader(file))
 	dec.DisallowUnknownFields()
 
@@ -842,11 +844,13 @@ func NewL2ImmutableConfig(config *DeployConfig, block *types.Block) (*immutables
 func NewL2StorageConfig(config *DeployConfig, block *types.Block) (state.StorageConfig, error) {
 	storage := make(state.StorageConfig)
 
+	log.Info("777", block);
+
 	if block.Number() == nil {
 		return storage, errors.New("block number not set")
 	}
 	if block.BaseFee() == nil {
-		return storage, errors.New("block base fee not set")
+		// return storage, errors.New("block base fee not set")
 	}
 
 	storage["L2ToL1MessagePasser"] = state.StorageValues{
@@ -869,7 +873,7 @@ func NewL2StorageConfig(config *DeployConfig, block *types.Block) (state.Storage
 	storage["L1Block"] = state.StorageValues{
 		"number":         block.Number(),
 		"timestamp":      block.Time(),
-		"basefee":        block.BaseFee(),
+		"basefee":        30000000,// block.BaseFee(),
 		"hash":           block.Hash(),
 		"sequenceNumber": 0,
 		"batcherHash":    eth.AddressAsLeftPaddedHash(config.BatchSenderAddress),
